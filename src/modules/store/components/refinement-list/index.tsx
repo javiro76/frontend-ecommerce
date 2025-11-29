@@ -1,17 +1,26 @@
-"use client"
+﻿"use client"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
+import { HttpTypes } from "@medusajs/types"
 
 import SortProducts, { SortOptions } from "./sort-products"
+import CategoryFilter from "./category-filter"
 
 type RefinementListProps = {
   sortBy: SortOptions
+  categories?: HttpTypes.StoreProductCategory[]
+  currentCategoryId?: string
   search?: boolean
-  'data-testid'?: string
+  "data-testid"?: string
 }
 
-const RefinementList = ({ sortBy, 'data-testid': dataTestId }: RefinementListProps) => {
+const RefinementList = ({ 
+  sortBy, 
+  categories,
+  currentCategoryId,
+  "data-testid": dataTestId 
+}: RefinementListProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -32,8 +41,20 @@ const RefinementList = ({ sortBy, 'data-testid': dataTestId }: RefinementListPro
   }
 
   return (
-    <div className="flex small:flex-col gap-12 py-4 mb-8 small:px-0 pl-6 small:min-w-[250px] small:ml-[1.675rem]">
-      <SortProducts sortBy={sortBy} setQueryParams={setQueryParams} data-testid={dataTestId} />
+    <div className="flex flex-col gap-6">
+      {categories && categories.length > 0 && (
+        <CategoryFilter 
+          categories={categories} 
+          currentCategoryId={currentCategoryId}
+        />
+      )}
+      <div className="border-t border-gray-200 pt-4">
+        <SortProducts 
+          sortBy={sortBy} 
+          setQueryParams={setQueryParams} 
+          data-testid={dataTestId} 
+        />
+      </div>
     </div>
   )
 }

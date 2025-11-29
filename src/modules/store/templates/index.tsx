@@ -3,10 +3,12 @@
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { listCategories } from "@lib/data/categories"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 import PaginatedProducts from "./paginated-products"
 
-const StoreTemplate = ({
+const StoreTemplate = async ({
   sortBy,
   page,
   countryCode,
@@ -17,6 +19,9 @@ const StoreTemplate = ({
 }) => {
   const pageNumber = page ? parseInt(page) : 1
   const sort = sortBy || "created_at"
+  
+  // Obtener categorías
+  const categories = await listCategories()
 
   return (
     <div className="w-full">
@@ -37,7 +42,7 @@ const StoreTemplate = ({
             <h2 className="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-purple-500">
               FILTRA TU BÚSQUEDA
             </h2>
-            <RefinementList sortBy={sort} />
+            <RefinementList sortBy={sort} categories={categories} />
           </div>
         </aside>
 
@@ -45,12 +50,14 @@ const StoreTemplate = ({
         <div className="flex-1">
           <div className="mb-6 flex items-center justify-between">
             <nav className="text-sm text-gray-500">
-              <span className="hover:text-purple-600 cursor-pointer">INICIO</span>
+              <LocalizedClientLink href="/" className="hover:text-purple-600 transition-colors">
+                INICIO
+              </LocalizedClientLink>
               <span className="mx-2">/</span>
               <span className="text-gray-800 font-medium">CATÁLOGO</span>
             </nav>
           </div>
-          
+
           <Suspense fallback={<SkeletonProductGrid />}>
             <PaginatedProducts
               sortBy={sort}
