@@ -1,5 +1,6 @@
 "use client"
 
+import { useId } from "react"
 import Back from "@modules/common/icons/back"
 import FastDelivery from "@modules/common/icons/fast-delivery"
 import Refresh from "@modules/common/icons/refresh"
@@ -12,6 +13,8 @@ type ProductTabsProps = {
 }
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
+  const id = useId()
+
   const tabs = [
     {
       label: "Product Information",
@@ -24,14 +27,14 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
   ]
 
   return (
-    <div className="w-full">
+    <div className="w-full" suppressHydrationWarning>
       <Accordion type="multiple">
         {tabs.map((tab, i) => (
           <Accordion.Item
-            key={i}
+            key={`${id}-${i}`}
             title={tab.label}
             headingSize="medium"
-            value={tab.label}
+            value={`${id}-${tab.label}`}
           >
             {tab.component}
           </Accordion.Item>
