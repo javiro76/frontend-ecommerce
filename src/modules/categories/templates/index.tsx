@@ -37,39 +37,43 @@ export default function CategoryTemplate({
   getParents(category)
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} data-testid="sort-by-container" />
+    <div className="flex flex-col small:flex-row small:items-start py-10 px-4 md:px-8 bg-white min-h-screen content-container rounded-lg shadow-lg" data-testid="category-container">
       <div className="w-full">
-        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
-          {parents &&
-            parents.map((parent) => (
-              <span key={parent.id} className="text-ui-fg-subtle">
-                <LocalizedClientLink
-                  className="mr-4 hover:text-black"
-                  href={`/categories/${parent.handle}`}
-                  data-testid="sort-by-link"
-                >
-                  {parent.name}
-                </LocalizedClientLink>
-                /
-              </span>
-            ))}
-          <h1 data-testid="category-page-title">{category.name}</h1>
+        {/* Migas de pan */}
+
+        <nav className="mb-6 flex items-center text-sm text-ui-fg-muted" aria-label="Breadcrumb">
+          <LocalizedClientLink href="/store" className="hover:text-black font-medium transition-colors">
+            Store
+          </LocalizedClientLink>
+          <span className="mx-2">/</span>
+          {parents && parents.map((parent, idx) => (
+            <span key={parent.id} className="flex items-center">
+              <LocalizedClientLink href={`/${countryCode}/categories/${parent.handle}`} className="hover:text-black">
+                {parent.name}
+              </LocalizedClientLink>
+              <span className="mx-2">/</span>
+            </span>
+          ))}
+          <span className="font-semibold text-black">{category.name}</span>
+        </nav>
+
+        {/* Banner ACTIVADO */}
+        <div className="mb-8 rounded-lg bg-gradient-to-r from-blue-100 to-blue-300 p-6 text-center shadow">
+          <span className="text-lg font-semibold text-blue-900">Descubre las mejores ofertas en {category.name}!</span>
         </div>
+
+        <h1 className="text-3xl font-bold mb-4 text-ui-fg-base" data-testid="category-page-title">{category.name}</h1>
         {category.description && (
-          <div className="mb-8 text-base-regular">
+          <div className="mb-8 text-base-regular text-ui-fg-subtle">
             <p>{category.description}</p>
           </div>
         )}
         {category.category_children && (
           <div className="mb-8 text-base-large">
-            <ul className="grid grid-cols-1 gap-2">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {category.category_children?.map((c) => (
-                <li key={c.id}>
-                  <InteractiveLink href={`/categories/${c.handle}`}>
+                <li key={c.id} className="bg-gray-50 rounded-lg p-4 shadow hover:shadow-md transition">
+                  <InteractiveLink href={`/categories/${c.handle}`} className="text-lg font-medium text-blue-700 hover:underline">
                     {c.name}
                   </InteractiveLink>
                 </li>
@@ -77,11 +81,12 @@ export default function CategoryTemplate({
             </ul>
           </div>
         )}
+        <div className="mb-8">
+          <RefinementList sortBy={sort} data-testid="sort-by-container" />
+        </div>
         <Suspense
           fallback={
-            <SkeletonProductGrid
-              numberOfProducts={category.products?.length ?? 8}
-            />
+            <SkeletonProductGrid numberOfProducts={category.products?.length ?? 8} />
           }
         >
           <PaginatedProducts
