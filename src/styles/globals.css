@@ -1,6 +1,45 @@
-@import "tailwindcss/base";
+﻿@import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* ========================================
+   GOLDEN JEWELRY THEME - Estilos Modernos
+   ======================================== */
+
+:root {
+  /* Colores principales - Tema Joyería Dorada */
+  --gold-50: #fffbeb;
+  --gold-100: #fef3c7;
+  --gold-200: #fde68a;
+  --gold-300: #fcd34d;
+  --gold-400: #fbbf24;
+  --gold-500: #f59e0b;
+  --gold-600: #d97706;
+  --gold-700: #b45309;
+  --gold-800: #92400e;
+  --gold-900: #78350f;
+  
+  /* Colores de acento */
+  --accent-rose: #be123c;
+  --accent-emerald: #059669;
+  
+  /* Sombras elegantes */
+  --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  --shadow-elegant: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  --shadow-gold: 0 4px 20px -2px rgba(245, 158, 11, 0.25);
+}
+
+/* Tipografía elegante */
+@layer base {
+  body {
+    @apply antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
 
 @layer utilities {
   /* Chrome, Safari and Opera */
@@ -13,8 +52,8 @@
   }
 
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   input:focus ~ label,
@@ -47,6 +86,100 @@
   input[type="search"]::-webkit-search-results-decoration {
     -webkit-appearance: none;
   }
+
+  /* Gradientes dorados */
+  .gradient-gold {
+    background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 100%);
+  }
+  
+  .gradient-gold-soft {
+    background: linear-gradient(135deg, var(--gold-50) 0%, var(--gold-100) 100%);
+  }
+  
+  .text-gradient-gold {
+    background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-700) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Efectos de hover elegantes */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1;
+    box-shadow: var(--shadow-elegant);
+  }
+
+  /* Efecto de brillo */
+  .shine-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shine-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+  }
+  
+  .shine-effect:hover::after {
+    animation: shine 0.6s ease forwards;
+  }
+
+  @keyframes shine {
+    0% {
+      left: -100%;
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  /* Animación de pulso suave */
+  .pulse-soft {
+    animation: pulse-soft 2s infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  /* Badge flotante */
+  .badge-float {
+    @apply absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg;
+    animation: badge-bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes badge-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
 }
 
 @layer components {
@@ -56,6 +189,85 @@
 
   .contrast-btn {
     @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition-colors duration-200 ease-in;
+  }
+
+  /* Botón dorado elegante */
+  .btn-gold {
+    @apply relative px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg shadow-lg overflow-hidden transition-all duration-300;
+  }
+  
+  .btn-gold:hover {
+    @apply from-amber-600 to-amber-700 shadow-xl scale-[1.02];
+  }
+  
+  .btn-gold:active {
+    @apply scale-[0.98];
+  }
+
+  /* Botón outline dorado */
+  .btn-gold-outline {
+    @apply px-6 py-3 border-2 border-amber-500 text-amber-600 font-semibold rounded-lg transition-all duration-300;
+  }
+  
+  .btn-gold-outline:hover {
+    @apply bg-amber-500 text-white;
+  }
+
+  /* Card de producto mejorada */
+  .product-card {
+    @apply relative bg-white rounded-2xl overflow-hidden transition-all duration-300 ease-out;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .product-card:hover {
+    @apply -translate-y-2;
+    box-shadow: var(--shadow-elegant);
+  }
+
+  /* Imagen de producto con zoom */
+  .product-image-wrapper {
+    @apply relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100;
+  }
+  
+  .product-image-wrapper img {
+    @apply transition-transform duration-500 ease-out;
+  }
+  
+  .product-card:hover .product-image-wrapper img {
+    @apply scale-110;
+  }
+
+  /* Badge de categoría */
+  .category-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 transition-colors;
+  }
+  
+  .category-badge:hover {
+    @apply bg-amber-200;
+  }
+
+  /* Precio destacado */
+  .price-tag {
+    @apply text-2xl font-bold text-amber-600;
+  }
+  
+  .price-tag-original {
+    @apply text-sm text-gray-400 line-through;
+  }
+
+  /* Separador elegante */
+  .divider-gold {
+    @apply h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent;
+  }
+
+  /* Input elegante */
+  .input-elegant {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all duration-200 outline-none;
+  }
+
+  /* Header glass effect */
+  .glass-header {
+    @apply bg-white/80 backdrop-blur-md border-b border-gray-100;
   }
 
   .text-xsmall-regular {
