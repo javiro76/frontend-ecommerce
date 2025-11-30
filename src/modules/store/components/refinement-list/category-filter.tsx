@@ -6,8 +6,8 @@ type CategoryFilterProps = {
   currentCategoryId?: string
 }
 
-export default function CategoryFilter({ 
-  categories, 
+export default function CategoryFilter({
+  categories,
   currentCategoryId
 }: CategoryFilterProps) {
   return (
@@ -19,10 +19,10 @@ export default function CategoryFilter({
         <li>
           <LocalizedClientLink
             href="/store"
-            className={`block text-sm py-1.5 px-2 rounded transition-colors ${
-              !currentCategoryId 
-                ? "bg-purple-100 text-purple-700 font-semibold" 
-                : "text-gray-600 hover:text-purple-600 hover:bg-purple-50"
+            className={`block text-sm py-2 px-3 rounded-lg transition-all duration-200 ${
+              !currentCategoryId
+                ? "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-800 font-semibold border-l-4 border-amber-500 shadow-sm"
+                : "text-gray-600 hover:text-amber-700 hover:bg-amber-50 hover:pl-4"
             }`}
           >
             Todos los productos
@@ -32,10 +32,10 @@ export default function CategoryFilter({
           <li key={category.id}>
             <LocalizedClientLink
               href={`/categories/${category.handle}`}
-              className={`block text-sm py-1.5 px-2 rounded transition-colors ${
+              className={`block text-sm py-2 px-3 rounded-lg transition-all duration-200 ${
                 currentCategoryId === category.id
-                  ? "bg-purple-100 text-purple-700 font-semibold"
-                  : "text-gray-600 hover:text-purple-600 hover:bg-purple-50"
+                  ? "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-800 font-semibold border-l-4 border-amber-500 shadow-sm"
+                  : "text-gray-600 hover:text-amber-700 hover:bg-amber-50 hover:pl-4"
               }`}
             >
               {category.name}
